@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUDE CON ARRAYS</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            margin: 0;
+            font-size: 24px;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 90%;
+            margin: 30px auto;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        td button {
+            padding: 8px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-update {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .btn-delete {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .btn-update:hover {
+            background-color: #45a049;
+        }
+
+        .btn-delete:hover {
+            background-color: #e53935;
+        }
+
+        .btn.secondary {
+            background-color: #808080;
+            color: white;
+            min-width: 120px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #form-container {
+            width: 70%;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #555;
+            display: block;
+        }
+
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        .form-actions {
+            text-align: center;
+        }
+
+        .btn-update-form {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        .btn-update-form:hover {
+            background-color: #45a049;
+        }
+
+        .btn-secondary {
+            background-color: #808080;
+            color: white;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #666;
+        }
+
+        @media (max-width: 768px) {
+            table {
+                width: 95%;
+            }
+
+            #form-container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>TABLA PARA ELIMINAR Y ACTUALIZAR DATOS</h1>
+    <br>
+    <table id="data-table">
+        <thead>
+            <tr>
+                <th>NOMBRE (s)</th>
+                <th>APELLIDO</th>
+                <th>CORREO</th>
+                <th>DOMICILIO</th>
+                <th>CIUDAD</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            <tr>
+                <td>Juan</td>
+                <td>Pérez</td>
+                <td>juan.perez@email.com</td>
+                <td>Calle Falsa 123</td>
+                <td>Ciudad X</td>
+                <td>
+                    <button class="btn btn-update" onclick="editRow(this)">Actualizar</button>
+                    <button class="btn btn-delete" onclick="deleteRow(this)">Eliminar</button>
+                </td>
+            </tr>
+            <!-- More rows can be added here -->
+        </tbody>
+    </table>
+    
+    <br><br>
+    <button type="button" id="show-form-btn" class="btn secondary" onclick="toggleForm()">Formulario</button>
+
+    <div id="form-container" class="hidden">
+        <h2>Formulario de Datos</h2>
+        <form id="data-form">
+            <div class="form-group">
+                <label for="nombre">Nombre(s):</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="apellido">Apellido:</label>
+                <input type="text" id="apellido" name="apellido" required>
+            </div>
+            <div class="form-group">
+                <label for="correo">Correo:</label>
+                <input type="email" id="correo" name="correo" required>
+            </div>
+            <div class="form-group">
+                <label for="domicilio">Domicilio:</label>
+                <input type="text" id="domicilio" name="domicilio" required>
+            </div>
+            <div class="form-group">
+                <label for="ciudad">Ciudad:</label>
+                <input type="text" id="ciudad" name="ciudad" required>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-update-form">Guardar</button>
+                <button type="button" class="btn btn-secondary" onclick="resetForm()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
